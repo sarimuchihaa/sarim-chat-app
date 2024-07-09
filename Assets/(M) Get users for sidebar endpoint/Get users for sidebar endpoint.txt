@@ -1,0 +1,80 @@
+(1)
+(Get users for sidebar endpoint)
+(user.routes.js)
+import express from "express";
+import protectRoute from "../middleware/protectRoute.js";
+import { getUsersForSidebar } from "../controllers/user.controllers.js";
+
+const router = express.Router();
+
+router.get("/", protectRoute, getUsersForSidebar)
+
+export default router;
+
+
+(user.controllers.js)
+import User from "../models/user.model.js";
+
+export const getUsersForSidebar = async (req, res) => {
+    try {
+      const loggedInUserId = req.user._id;
+
+      const filteredUsers = await User.find({_id: {$ne: loggedInUserId} }).select("-password");
+
+      res.status(200).json(filteredUsers);
+    } catch (error) {
+      console.log("Error in getUsersForSidebar: ", error.message);
+      res.status(500).json({error: "Internal server error"});
+    }
+};
+Terminal:
+POSTMAN:
+GET:
+http://localhost:5000/api/users
+Output:
+[
+    {
+        "_id": "667c4535a8a56ff1fbe30033",
+        "fullName": "Sehar Ali",
+        "username": "seharali",
+        "gender": "male",
+        "profilePic": "https://avatar.iran.liara.run/public/boy?username=seharali",
+        "__v": 0
+    },
+    {
+        "_id": "667c5d0b23c319e2f2bb00ad",
+        "fullName": "Sasuke Uchiha",
+        "username": "sasukeuchiha",
+        "gender": "female",
+        "profilePic": "https://avatar.iran.liara.run/public/girl?username=sasukeuchiha",
+        "__v": 0
+    },
+    {
+        "_id": "667d1c250d8a4357d643e07c",
+        "fullName": "Naruto Uzumaki",
+        "username": "narutouzumaki",
+        "gender": "male",
+        "profilePic": "https://avatar.iran.liara.run/public/boy?username=narutouzumaki",
+        "__v": 0
+    },
+    {
+        "_id": "667f2dcae62ba7e518b9c8d4",
+        "fullName": "SaiWhite",
+        "username": "saikwhite",
+        "gender": "female",
+        "profilePic": "https://avatar.iran.liara.run/public/girl?username=saikwhite",
+        "createdAt": "2024-06-28T21:40:27.018Z",
+        "updatedAt": "2024-06-28T21:40:27.018Z",
+        "__v": 0
+    },
+    {
+        "_id": "66817d7b54fa5d497ab32cde",
+        "fullName": "Sagheer Abass",
+        "username": "sagheerabass",
+        "gender": "male",
+        "profilePic": "https://avatar.iran.liara.run/public/boy?username=sagheerabass",
+        "createdAt": "2024-06-30T15:44:59.247Z",
+        "updatedAt": "2024-06-30T15:44:59.247Z",
+        "__v": 0
+    }
+]

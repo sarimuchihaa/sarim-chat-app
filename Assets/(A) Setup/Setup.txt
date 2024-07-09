@@ -1,0 +1,67 @@
+(1)
+(Setup)
+(Frontend)
+cd frontend
+npm create vite@latest .
+npm install
+npm run dev
+Terminal:
+http://localhost:5173/
+Vite + React
+
+
+(Backend)
+(server.js)
+import express from "express";
+import deotenv from "dotenv";
+
+const app = express();
+
+deotenv.config();
+const PORT = process.env.PORT || 5000;
+
+app.get("/", (req, res) => {
+    // root route http://localhost:5000/
+    res.send("Hello Ruby love☘️");
+});
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+Terminal:
+npm init -y
+npm install express dotenv cookie-parser bcryptjs mongoose socket.io jsonwebtoken
+npm install nodemon --save-dev
+npm run server
+
+> chatapp@1.0.0 server
+> nodemon backend/server.js
+Server running on port 5000
+http://localhost:5000/
+Hello Ruby love☘️
+(.env)
+PORT=5000
+(package.json)
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon backend/server.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.4",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

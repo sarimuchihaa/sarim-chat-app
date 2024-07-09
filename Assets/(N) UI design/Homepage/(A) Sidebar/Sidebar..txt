@@ -1,0 +1,109 @@
+(1)
+(Sidebar)
+(Search input)
+(Sidebar.jsx)
+import SearchInput from "./SearchInput"
+
+const Sidebar = () => {
+  return (
+    <div>
+        <SearchInput/>
+        <div className="divider px-3"></div>
+        {/* <Conversations/>
+        <LogoutButton/> */}
+    </div>
+  )
+}
+export default Sidebar;
+
+
+(SearchInput.jsx)
+import { IoSearchSharp } from "react-icons/io5";
+
+const SearchInput = () => {
+  return (
+    <form className="flex items-center gap-2">
+        <input type="text" placeholder="Search..." className="input input-bordered rounded-full"/>
+        <button type="submit" className="btn btn-circle bg-sky-500 text-white">
+           <IoSearchSharp  className="w-6 h-6 outline-none"/>
+        </button>
+    </form>
+  )
+}
+export default SearchInput;
+
+
+(LogoutButton.jsx)
+import { BiLogOut } from "react-icons/bi";
+const LogoutButton = () => {
+	return <div className='mt-auto'>
+		<BiLogOut className='w-16 h-8 mt-5 text-white cursor-pointer'/>
+	</div>;
+};
+export default LogoutButton;
+
+
+
+(2)
+(Conversations)
+(SearchInput.jsx)
+import { IoSearchSharp } from "react-icons/io5";
+
+const SearchInput = () => {
+  return (
+    <form className="flex items-center gap-2">
+        <input type="text" placeholder="Search..." className="input input-bordered rounded-full mt-4 w-70"/>
+        <button type="submit" className="btn btn-circle bg-sky-500 text-white mt-4">
+           <IoSearchSharp  className="w-6 h-6 outline-none"/>
+        </button>
+    </form>
+  )
+}
+export default SearchInput;
+
+
+(Conversation.jsx)
+const Conversation = () => {
+	return (
+		<>
+			<div className='flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer'>
+				<div className='avatar online'>
+					<div className='w-12 rounded-full'>
+						<img
+							src='https://cdn0.iconfinder.com/data/icons/communication-line-10/24/account_profile_user_contact_person_avatar_placeholder-512.png'
+							alt='user avatar'
+						/>
+					</div>
+				</div>
+
+				<div className='flex flex-col flex-1'>
+					<div className='flex gap-3 justify-between'>
+						<p className='font-bold text-gray-200'>John Doe</p>
+						<span className='text-xl'>🎃</span>
+					</div>
+				</div>
+			</div>
+
+			<div className='divider my-0 py-0 h-1' />
+		</>
+	);
+};
+export default Conversation;
+
+
+(Conversations.jsx)
+import Conversation from "./Conversation";
+
+const Conversations = () => {
+	return (
+		<div className='py-2 flex flex-col overflow-auto'>
+			<Conversation />
+			<Conversation />
+			<Conversation />
+			<Conversation />
+			<Conversation />
+			<Conversation />
+		</div>
+	);
+};
+export default Conversations;

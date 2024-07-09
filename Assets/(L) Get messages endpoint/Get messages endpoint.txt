@@ -1,0 +1,60 @@
+(1)
+(Get messages endpoint)
+(message.routes.js)
+import express from "express";
+import { sendMessage, getMessages } from "../controllers/message.controllers.js";
+import protectRoute from "../middleware/protectRoute.js";
+
+const router = express.Router();
+
+router.get("/:id", protectRoute, getMessages);
+router.post("/send/:id", protectRoute, sendMessage);
+
+export default router;
+
+
+(message.controllers.js)
+export const getMessages = async (req, res) => {
+	try {
+		const {id:userToChatId}= req.params;
+		const senderId = req.user._id;
+
+		const conversation = await Conversation.findOne({
+			participants: { $all: [senderId, userToChatId] },
+		}).populate("messages")
+
+		if (!conversation) return res.status(200).json([]);
+
+		const messages = conversation.messages;
+
+		res.status(200).json(messages);
+	} catch (error) {
+	  console.log("Error in getMessages controller: ", error.message);
+	  res.status(500).json({error: "Internal server error"});
+	}
+};
+Terminal:
+POSTMAN:
+GET:
+http://localhost:5000/api/messages/667c5d0b23c319e2f2bb00ad
+Output:
+[
+    {
+        "_id": "6682a606d420c44d816e97ed",
+        "senderId": "6681a7d7e75703457a743b94",
+        "receiverId": "667c5d0b23c319e2f2bb00ad",
+        "message": "Hello Sasuke how is your chidori training going on",
+        "createdAt": "2024-07-01T12:50:14.695Z",
+        "updatedAt": "2024-07-01T12:50:14.695Z",
+        "__v": 0
+    },
+    {
+        "_id": "6682a682d420c44d816e97fb",
+        "senderId": "6681a7d7e75703457a743b94",
+        "receiverId": "667c5d0b23c319e2f2bb00ad",
+        "message": "I am Sarim Ali friend of Itachi",
+        "createdAt": "2024-07-01T12:52:18.616Z",
+        "updatedAt": "2024-07-01T12:52:18.616Z",
+        "__v": 0
+    }
+]

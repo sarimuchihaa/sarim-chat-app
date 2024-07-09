@@ -1,0 +1,17 @@
+(1)
+(Send message endpoint)
+(message.routes.js)
+import express from "express";
+import { sendMessage } from "../controllers/message.controllers.js";
+
+const router = express.Router();
+
+router.post("/send/:id", sendMessage);
+
+export default router;
+
+
+(message.controllers.js)
+export const sendMessage = async (req, res) => {
+    console.log("Message sent", req.params.id);
+};
