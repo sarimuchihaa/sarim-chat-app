@@ -39,3 +39,28 @@ server.listen(PORT, () => {
   connectToMongoDB();
   console.log(`Server running on port ${PORT}`)
 });
+
+import axios from 'axios';
+import cron from 'node-cron';
+
+const url = 'https://sarim-chat-app.onrender.com/';
+
+
+// Function to send a request
+const sendRequest = async () => {
+  try {
+    const response = await axios.get(url);
+    console.log(`Request sent at ${new Date().toLocaleTimeString()}:`, response.status);
+  } catch (error) {
+    console.error(`Error sending request at ${new Date().toLocaleTimeString()}:`, error.message);
+  }
+};
+
+// Schedule the task to run every 5 minutes
+cron.schedule('*/5 * * * *', () => {
+  console.log(`Sending request to ${url}`);
+  sendRequest();
+});
+
+// Start immediately
+sendRequest();
